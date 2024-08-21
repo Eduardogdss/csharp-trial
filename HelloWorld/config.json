@@ -1,9 +1,0 @@
-{
-  "EmailDestino": "eduardo-ponto@hotmail.com",
-  "SmtpConfig": {
-    "Host": "smtp.gmail.com",
-    "Port": 587,
-    "Username": "eduaardolegal@gmail.com",
-    "Password": "aivg rghr yisa ujhq"
-  }
-}

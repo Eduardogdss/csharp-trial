@@ -65,6 +65,11 @@ namespace MeuPrograma
 
             // Ler a configuração do arquivo JSON
             string configContent = await File.ReadAllTextAsync("config.json");
+            if (string.IsNullOrWhiteSpace(configContent))
+            {
+                Console.WriteLine("Arquivo de configuração vazio.");
+                return;
+            }
             Config config = JsonSerializer.Deserialize<Config>(configContent);
             Console.WriteLine($"Configuração: {config.EmailDestino}");
 
@@ -128,7 +133,6 @@ namespace MeuPrograma
                     IsBodyHtml = false,
                 };
                 mailMessage.To.Add(config.EmailDestino);
-                Console.WriteLine($"Eemaill {mailMessage}");
                 smtpClient.Send(mailMessage);
                 Console.WriteLine("E-mail enviado com sucesso.");
             }

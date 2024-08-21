@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "GOtmEUdfHVLnHuNQzvNllWHE6UBaTOM56R7GqVPpODs8vn0xJiTA0xui79pU84Sk0kPKLrTRAFjpRkbKhQa6pw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\eduar\\csharp\\HelloWorld\\HelloWorld.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\eduar\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

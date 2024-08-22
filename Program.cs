@@ -14,40 +14,17 @@ namespace MeuPrograma
     {
         static async Task<float?> GetRegularMarketPriceAsync(string active)
         {
-            string baseUrl =
-                "https://brapi.dev/api/quote/" + active + "?token=jjM3uGcXaAJ7Raq3i26xxz";
+            string baseUrl = $"https://brapi.dev/api/quote/{active}?token=jjM3uGcXaAJ7Raq3i26xxz";
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    using (HttpResponseMessage res = await client.GetAsync(baseUrl))
-                    {
-                        using (HttpContent content = res.Content)
-                        {
-                            var data = await content.ReadAsStringAsync();
-                            if (data != null)
-                            {
-                                var dataObj = JObject.Parse(data);
-                                var regularMarketPriceToken = dataObj["results"]
-                                    ?[0]
-                                    ?["regularMarketPrice"];
-                                if (regularMarketPriceToken != null)
-                                {
-                                    return regularMarketPriceToken.Value<float>();
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Preço atual não encontrado.");
-                                    return null;
-                                }
-                            }
-                            else
-                            {
-                                Console.WriteLine("Sem dados.");
-                                return null;
-                            }
-                        }
-                    }
+                    HttpResponseMessage res = await client.GetAsync(baseUrl);
+                    res.EnsureSuccessStatusCode();
+                    string data = await res.Content.ReadAsStringAsync();
+                    var dataObj = JObject.Parse(data);
+                    var regularMarketPriceToken = dataObj["results"]?[0]?["regularMarketPrice"];
+                    return regularMarketPriceToken?.Value<float>();
                 }
             }
             catch (Exception e)
@@ -71,11 +48,17 @@ namespace MeuPrograma
                 return;
             }
             Config config = JsonSerializer.Deserialize<Config>(configContent);
-            Console.WriteLine($"Configuração: {config.EmailDestino}");
+            if (config == null)
+            {
+                Console.WriteLine("Erro ao desserializar o arquivo de configuração.");
+                return;
+            }
 
             if (args.Length < 3)
             {
-                Console.WriteLine("Por favor, forneça 3 argumentos: <baseUrl> <arg2> <arg3>");
+                Console.WriteLine(
+                    "Por favor, forneça 3 argumentos: <ativo> <precoVenda> <precoCompra>"
+                );
                 return;
             }
 
@@ -115,6 +98,12 @@ namespace MeuPrograma
         {
             try
             {
+                if (config.SmtpConfig == null || config.EmailDestino == null)
+                {
+                    Console.WriteLine("Configuração de SMTP ou e-mail de destino não fornecida.");
+                    return;
+                }
+
                 var smtpClient = new SmtpClient(config.SmtpConfig.Host)
                 {
                     Port = config.SmtpConfig.Port,
@@ -127,12 +116,18 @@ namespace MeuPrograma
 
                 var mailMessage = new MailMessage
                 {
-                    From = new MailAddress(config.SmtpConfig.Username),
+                    From = new MailAddress(
+                        config.SmtpConfig.Username
+                            ?? throw new ArgumentNullException(nameof(config.SmtpConfig.Username))
+                    ),
                     Subject = "Alerta de Preço",
                     Body = mensagem,
                     IsBodyHtml = false,
                 };
-                mailMessage.To.Add(config.EmailDestino);
+                mailMessage.To.Add(
+                    config.EmailDestino
+                        ?? throw new ArgumentNullException(nameof(config.EmailDestino))
+                );
                 smtpClient.Send(mailMessage);
                 Console.WriteLine("E-mail enviado com sucesso.");
             }

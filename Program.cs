@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Mail;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DotNetEnv;
 using Newtonsoft.Json.Linq;
 
 namespace MeuPrograma
@@ -14,7 +15,9 @@ namespace MeuPrograma
     {
         static async Task<float?> GetRegularMarketPriceAsync(string active)
         {
-            string baseUrl = $"https://brapi.dev/api/quote/{active}?token=jjM3uGcXaAJ7Raq3i26xxz";
+            Env.Load();
+            string token = Environment.GetEnvironmentVariable("API_TOKEN");
+            string baseUrl = $"https://brapi.dev/api/quote/{active}?token={token}";
             try
             {
                 using (HttpClient client = new HttpClient())

@@ -21,13 +21,8 @@ namespace MeuPrograma
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
             // Ler a configuração do arquivo JSON
-            string configContent = await File.ReadAllTextAsync("config.json");
-            if (string.IsNullOrWhiteSpace(configContent))
-            {
-                Console.WriteLine("Arquivo de configuração vazio.");
-                return;
-            }
-            Config config = JsonSerializer.Deserialize<Config>(configContent);
+            string? configContent = await File.ReadAllTextAsync("config.json");
+            Config? config = JsonSerializer.Deserialize<Config>(configContent);
             if (config == null)
             {
                 Console.WriteLine("Erro ao desserializar o arquivo de configuração.");
@@ -46,12 +41,12 @@ namespace MeuPrograma
             string active = args[0];
             if (!float.TryParse(args[1], out float sellRef))
             {
-                Console.WriteLine("O segundo argumento deve ser um número válido.");
+                Console.WriteLine("2º argumento inválido.");
                 return;
             }
             if (!float.TryParse(args[2], out float buyRef))
             {
-                Console.WriteLine("O terceiro argumento deve ser um número válido.");
+                Console.WriteLine("3º argumento inválido.");
                 return;
             }
 

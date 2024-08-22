@@ -20,7 +20,6 @@ namespace MeuPrograma
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
-            // Ler a configuração do arquivo JSON
             string? configContent = await File.ReadAllTextAsync("config.json");
             Config? config = JsonSerializer.Deserialize<Config>(configContent);
             if (config == null)

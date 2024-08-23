@@ -1,4 +1,4 @@
-namespace MeuPrograma
+namespace InoaPriceAlert
 {
     public class SmtpConfig
     {

@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using DotNetEnv;
 using Newtonsoft.Json.Linq;
 
-namespace MeuPrograma
+namespace InoaPriceAlert
 {
-    class Program
+    class StockQuoteAlert
     {
         static async Task Main(string[] args)
         {

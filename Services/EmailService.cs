@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Net.Mail;
 
-namespace MeuPrograma
+namespace InoaPriceAlert
 {
     public class EmailService
     {
@@ -15,14 +15,13 @@ namespace MeuPrograma
 
         public void SendEmail(string mensagem)
         {
-            try
-            {
                 if (_config.SmtpConfig == null || _config.EmailDestino == null)
                 {
                     Console.WriteLine("Configuração de SMTP ou e-mail de destino não fornecida.");
                     return;
                 }
-
+            try
+            {
                 var smtpClient = new SmtpClient(_config.SmtpConfig.Host)
                 {
                     Port = _config.SmtpConfig.Port,

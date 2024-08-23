@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
-namespace MeuPrograma
+namespace InoaPriceAlert
 {
     public class MarketService
     {
@@ -16,11 +16,13 @@ namespace MeuPrograma
 
         public async Task<float?> GetRegularMarketPriceAsync(string active)
         {
+            string apiUrlSample = Environment.GetEnvironmentVariable("API_URL_SAMPLE") ?? string.Empty;
             string token = Environment.GetEnvironmentVariable("API_TOKEN") ?? string.Empty;
-            string baseUrl = $"https://brapi.dev/api/quote/{active}?token={token}";
+
+            string url = apiUrlSample.Replace("{active}", active).Replace("{token}", token);
             try
             {
-                HttpResponseMessage res = await _httpClient.GetAsync(baseUrl);
+                HttpResponseMessage res = await _httpClient.GetAsync(url);
                 res.EnsureSuccessStatusCode();
                 string data = await res.Content.ReadAsStringAsync();
                 var dataObj = JObject.Parse(data);

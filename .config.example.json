@@ -1,0 +1,9 @@
+{
+  "EmailDestino": "email-destino@example.com",
+  "SmtpConfig": {
+    "Host": "example.host.com",
+    "Port": 587,
+    "Username": "email-remetente@example.com",
+    "Password": "senharemetente"
+  }
+}

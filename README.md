@@ -23,11 +23,11 @@
 
    **OU**
 
-   Vá até a pasta publish e execute o arquivo `Program.exe` passando os argumentos:
+   Vá até a pasta publish e execute o arquivo `StockQuoteAlert.exe` passando os argumentos:
 
    ```sh
    cd ./bin/Debug/net6.0/publish
-   ./Program.exe "ATIVO" "VALOR_VENDA" "VALOR_COMPRA"
+   ./StockQuoteAlert.exe "ATIVO" "VALOR_VENDA" "VALOR_COMPRA"
    ```
 
 ### Modelo dos arquivos
@@ -52,5 +52,7 @@ Crie um arquivo `config.json` na raiz do projeto com o seguinte conteúdo:
 - `.env`
 
   Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+  Obs: é importante que, independente da URL, o token e o ativo estejam nos formatos abaixo.
 
   `API_TOKEN=SEU_TOKEN__BRAPI_DEV`
+  `API_URL_SAMPLE="https://brapi.dev/api/quote/{active}?token={token}"`

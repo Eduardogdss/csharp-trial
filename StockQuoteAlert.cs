@@ -16,7 +16,6 @@ namespace InoaPriceAlert
         static async Task Main(string[] args)
         {
             Env.Load();
-            var marketService = new MarketService();
             CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
@@ -27,12 +26,11 @@ namespace InoaPriceAlert
                 Console.WriteLine("Erro ao desserializar o arquivo de configuração.");
                 return;
             }
-            var emailService = new EmailService(config);
 
-            if (args.Length < 3)
+            if (args.Length < 3 || args.Length > 4)
             {
                 Console.WriteLine(
-                    "Por favor, forneça 3 argumentos: <ativo> <precoVenda> <precoCompra>"
+                    "Por favor, forneça 3 ou 4 argumentos: <ativo> <precoVenda> <precoCompra> [intervaloEmMs]"
                 );
                 return;
             }
@@ -48,6 +46,15 @@ namespace InoaPriceAlert
                 Console.WriteLine("3º argumento inválido.");
                 return;
             }
+
+            int interval = 3000;
+            if (args.Length == 4 && !int.TryParse(args[3], out interval))
+            {
+                Console.WriteLine("4º argumento inválido. Usando valor padrão de 3000 ms.");
+                interval = 3000;
+            }
+            var marketService = new MarketService();
+            var emailService = new EmailService(config);
 
             while (true)
             {

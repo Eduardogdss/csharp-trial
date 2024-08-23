@@ -18,7 +18,7 @@
 
    ```sh
    dotnet build
-   dotnet run -- "ATIVO" "VALOR_VENDA" "VALOR_COMPRA"
+   dotnet run -- "ATIVO" "VALOR_VENDA" "VALOR_COMPRA" "INTERVALO_EM_MS (opcional)"
    ```
 
    **OU**
@@ -27,7 +27,7 @@
 
    ```sh
    cd ./bin/Debug/net6.0/publish
-   ./StockQuoteAlert.exe "ATIVO" "VALOR_VENDA" "VALOR_COMPRA"
+   ./StockQuoteAlert.exe "ATIVO" "VALOR_VENDA" "VALOR_COMPRA" "INTERVALO_EM_MS (opcional)"
    ```
 
 ### Modelo dos arquivos
